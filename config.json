@@ -1,4 +1,7 @@
 {
+    "EMAIL": "",
+    "PASSWORD": "",
+    "OTPKEY": "",
     "NOTIFICATION": true,
     "language": "en",
     "notiGroup": true,
@@ -31,7 +34,7 @@
     },
     "DESIGN": {
         "Theme": "blue",
-        "Admin": "Trịnh Đình Phát",
+        "Admin": "Trinh Dinh Phat",
         "Setup": {
             "Theme": "Available themes: Aqua, Fiery, Blue, Pink, Red, Retro, Sunlight, Teen, Summer, Flower, Ghost, Hacker"
         }

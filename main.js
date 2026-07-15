@@ -8,14 +8,6 @@ const chalk = require('chalk');
 const gradient = require('gradient-string');
 const { execSync } = require('child_process');
 const logger = require("./utils/log.js");
-// Auto-generate config.json from sample if missing (for Railway deployment)
-if (!fs.existsSync(path.join(__dirname, 'config.json'))) {
-  const samplePath = path.join(__dirname, 'config.json.sample');
-  if (fs.existsSync(samplePath)) {
-    fs.copyFileSync(samplePath, path.join(__dirname, 'config.json'));
-    console.log('[ INIT ] Generated config.json from config.json.sample');
-  }
-}
 const con = require('./config.json');
 const login = require('./includes/f');
 const moment = require("moment-timezone");
@@ -210,14 +202,6 @@ try {
 }
 catch { return logger.loader("Failed to load config file!", "error") }
 
-if (process.env.EMAIL) global.config.EMAIL = process.env.EMAIL;
-if (process.env.PASSWORD) global.config.PASSWORD = process.env.PASSWORD;
-if (process.env.OTPKEY) global.config.OTPKEY = process.env.OTPKEY;
-if (process.env.ACCESSTOKEN) global.config.ACCESSTOKEN = process.env.ACCESSTOKEN;
-if (process.env.ADMINBOT) global.config.ADMINBOT = JSON.parse(process.env.ADMINBOT);
-if (process.env.BOTNAME) global.config.BOTNAME = process.env.BOTNAME;
-if (process.env.PREFIX) global.config.PREFIX = process.env.PREFIX;
-if (process.env.LANGUAGE) global.config.language = process.env.LANGUAGE;
 if (process.env.GROQ_API_KEY) global.config.configApi.groqApiKey = process.env.GROQ_API_KEY;
 
 const { Sequelize, sequelize } = require("./includes/database");

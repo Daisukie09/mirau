@@ -1,32 +1,9 @@
-require("dotenv").config();
 const { spawn } = require("child_process");
 const { readFileSync } = require("fs-extra");
 //let http = require('http');
 const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
-
-// Auto-generate config.json from sample if missing (for Railway deployment)
-if (!fs.existsSync(path.join(__dirname, "config.json"))) {
-  const samplePath = path.join(__dirname, "config.json.sample");
-  if (fs.existsSync(samplePath)) {
-    fs.copyFileSync(samplePath, path.join(__dirname, "config.json"));
-    console.log("[ INIT ] Generated config.json from config.json.sample");
-  }
-}
-// Create required directories if missing
-const requiredDirs = [
-  "./modules/commands/cache",
-  "./modules/commands/data",
-  "./modules/events/cache"
-];
-requiredDirs.forEach(dir => {
-  const dirPath = path.join(__dirname, dir);
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-    console.log(`[ INIT ] Created directory: ${dir}`);
-  }
-});
 var deviceID = require('uuid');
 var adid = require('uuid');
 const totp = require('totp-generator');
@@ -43,14 +20,6 @@ const gradient = require('gradient-string');
 
 const con = require("./config.json");
 
-if (process.env.EMAIL) con.EMAIL = process.env.EMAIL;
-if (process.env.PASSWORD) con.PASSWORD = process.env.PASSWORD;
-if (process.env.OTPKEY) con.OTPKEY = process.env.OTPKEY;
-if (process.env.ACCESSTOKEN) con.ACCESSTOKEN = process.env.ACCESSTOKEN;
-if (process.env.ADMINBOT) con.ADMINBOT = JSON.parse(process.env.ADMINBOT);
-if (process.env.BOTNAME) con.BOTNAME = process.env.BOTNAME;
-if (process.env.PREFIX) con.PREFIX = process.env.PREFIX;
-if (process.env.LANGUAGE) con.language = process.env.LANGUAGE;
 if (process.env.GROQ_API_KEY) con.configApi.groqApiKey = process.env.GROQ_API_KEY;
 
 const theme = con.DESIGN.Theme;
@@ -183,20 +152,12 @@ function startBot(message) {
     logger("Error occurred: " + JSON.stringify(error), "[ START ]");
   });
 };
-if (!fs.existsSync(path.join(__dirname, "acc.json"))) {
-  const samplePath = path.join(__dirname, "acc.json.sample");
-  if (fs.existsSync(samplePath)) {
-    fs.copyFileSync(samplePath, path.join(__dirname, "acc.json"));
-    console.log("[ INIT ] Generated acc.json from acc.json.sample");
-  }
-}
-const logacc = require('./acc.json');
 const config = require('./config.json');
 async function login() {
   if (config.ACCESSTOKEN !== "") return
-  var uid = process.env.EMAIL || logacc.EMAIL || ""
-  var password = process.env.PASSWORD || logacc.PASSWORD || ""
-  var fa = process.env.OTPKEY || logacc.OTPKEY || ""
+  var uid = config.EMAIL || ""
+  var password = config.PASSWORD || ""
+  var fa = config.OTPKEY || ""
   if (uid === "" || password === "") {
     return console.log('Missing email/password. Set EMAIL and PASSWORD in environment variables.');
   }

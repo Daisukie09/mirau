@@ -1,8 +1,6 @@
 node_modules/
 appstate.json
-acc.json
-config.json
-data.sqlite
+*.sqlite
 Horizon_Database/*.sqlite
 modules/commands/cache/
 modules/commands/data/

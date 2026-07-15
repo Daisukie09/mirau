@@ -33,7 +33,7 @@
     "child_process": "^1.0.2",
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
-    "dotenv": "^16.4.5",
+
     "encode32": "^1.1.0",
     "eval": "^0.1.8",
     "express": "^4.21.1",
