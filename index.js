@@ -170,6 +170,13 @@ function startBot(message) {
     logger("Error occurred: " + JSON.stringify(error), "[ START ]");
   });
 };
+if (!fs.existsSync(path.join(__dirname, "acc.json"))) {
+  const samplePath = path.join(__dirname, "acc.json.sample");
+  if (fs.existsSync(samplePath)) {
+    fs.copyFileSync(samplePath, path.join(__dirname, "acc.json"));
+    console.log("[ INIT ] Generated acc.json from acc.json.sample");
+  }
+}
 const logacc = require('./acc.json');
 const config = require('./config.json');
 async function login() {
