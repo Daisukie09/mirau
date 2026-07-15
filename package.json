@@ -8,6 +8,9 @@
     "login": "node login",
     "test": "node --trace-warnings --use_strict --async-stack-traces mirai"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "author": "TDF-2803 | zL: 0878139888",
   "license": "GPL-3.0",
   "dependencies": {

@@ -14,6 +14,19 @@ if (!fs.existsSync(path.join(__dirname, "config.json"))) {
     console.log("[ INIT ] Generated config.json from config.json.sample");
   }
 }
+// Create required directories if missing
+const requiredDirs = [
+  "./modules/commands/cache",
+  "./modules/commands/data",
+  "./modules/events/cache"
+];
+requiredDirs.forEach(dir => {
+  const dirPath = path.join(__dirname, dir);
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+    console.log(`[ INIT ] Created directory: ${dir}`);
+  }
+});
 var deviceID = require('uuid');
 var adid = require('uuid');
 const totp = require('totp-generator');
