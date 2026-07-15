@@ -1,0 +1,150 @@
+{
+    "NOTIFICATION": true,
+    "language": "en",
+    "notiGroup": true,
+    "keyActive": "",
+    "DeveloperMode": false,
+    "autoCreateDB": true,
+    "allowInbox": true,
+    "commandDisabled": [
+        "down.js"
+    ],
+    "eventDisabled": [],
+    "autoRestart": 36000000,
+    "UPTIME": 2446107.1632777182,
+    "ACCESSTOKEN": "",
+    "FACEBOOK_ADMIN": "",
+    "ZALO_ADMIN": "",
+    "ADMIN_NAME": "",
+    "BOTNAME": "BOT-Mess-TDF",
+    "PREFIX": "/",
+    "ADMINBOT": [
+        ""
+    ],
+    "NDH": [
+        ""
+    ],
+    "DATABASE": {
+        "sqlite": {
+            "storage": "data.sqlite"
+        }
+    },
+    "DESIGN": {
+        "Theme": "blue",
+        "Admin": "Trịnh Đình Phát",
+        "Setup": {
+            "Theme": "Available themes: Aqua, Fiery, Blue, Pink, Red, Retro, Sunlight, Teen, Summer, Flower, Ghost, Hacker"
+        }
+    },
+    "APPSTATEPATH": "appstate.json",
+    "NPM_FCA": "./fca-tiendz",
+    "ACCESSCOOKIE_WHITE": "",
+    "ACCESSCOOKIE_BLACK": "",
+    "configApi": {
+        "groqApiKey": ""
+    },
+    "autoCleanCache": {
+        "Enable": true,
+        "CachePath": "./modules/commands/cache",
+        "AllowFileExtension": [
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".mp4",
+            ".mp3",
+            ".m4a",
+            ".ttf",
+            ".gif"
+        ]
+    },
+    "version": "4.6.9",
+    "iconUnsend": {
+        "status": true,
+        "icon": "👍"
+    },
+    "FCAOption": {
+        "forceLogin": true,
+        "listenEvents": true,
+        "pauseLog": true,
+        "logLevel": "error",
+        "selfListen": true,
+        "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 OPR/84.0.4316.21"
+    },
+    "boctham": {
+        "cooldownTime": ""
+    },
+    "cavevip": {
+        "cooldownTime": 1200000
+    },
+    "daily": {
+        "cooldownTime": 43200000,
+        "rewardCoin": 200000
+    },
+    "fbvideo": {
+        "API_KEY": ""
+    },
+    "hunter": {
+        "userToken": "",
+        "adminToken": ""
+    },
+    "loto": {
+        "maxPlayers": 10,
+        "getDelay": 8
+    },
+    "math": {
+        "WOLFRAM": ""
+    },
+    "pokemon": {
+        "APIKEY": ""
+    },
+    "rname": {
+        "APIKEY": ""
+    },
+    "shortvd": {
+        "APIKEY": ""
+    },
+    "sim": {
+        "APIKEY": ""
+    },
+    "video2": {
+        "YOUTUBE_API": ""
+    },
+    "work": {
+        "cooldownTime": ""
+    },
+    "xidach": {
+        "maxPlayers": 5,
+        "normalWinBonus": 1,
+        "superWinBonus": 2,
+        "epicWinBonus": 4
+    },
+    "log": {
+        "enable": true
+    },
+    "leave": {
+        "status": false,
+        "number": 2
+    },
+    "adminOnly": false,
+    "menu": {
+        "autoUnsend": {
+            "status": true,
+            "timeOut": 60
+        }
+    },
+    "goibot": {
+        "APIKEY": ""
+    },
+    "farm": {
+        "cooldownTime": 300000
+    },
+    "spam": {
+        "spamDelay": 2
+    },
+    "spamping": {
+        "spamDelay": 2
+    },
+    "money": {
+        "cooldownTime": 1800000
+    }
+}

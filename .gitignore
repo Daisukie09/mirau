@@ -1,0 +1,13 @@
+node_modules/
+appstate.json
+acc.json
+config.json
+data.sqlite
+Horizon_Database/*.sqlite
+modules/commands/cache/
+modules/commands/data/
+modules/commands/tt/
+modules/commands/tuongtac_data/
+modules/events/cache/
+.env
+*.log
