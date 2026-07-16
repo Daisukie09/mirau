@@ -4,7 +4,8 @@ f = require('fs'),
 p = __dirname+'/data/statusAutoTrans.json',
 d,
 api = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=vi&dt=t&q=';
-;    
+;
+if(!f.existsSync(__dirname+'/data'))f.mkdirSync(__dirname+'/data');
 if(!f.existsSync(p))f.writeFileSync(p,'{}');
 d=JSON.parse(f.readFileSync(p));
 ;
