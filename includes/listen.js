@@ -367,7 +367,7 @@ module.exports = function ({ api, models }) {
     h = Math.floor(tm / (60 * 60)), H = h < 10 ? '0' + h : h,
       m = Math.floor((tm % (60 * 60)) / 60), M = m < 10 ? '0' + m : m,
       s = Math.floor(tm % 60), S = s < 10 ? '0' + s : s, $ = ':'
-    var data_anti = JSON.parse(fs.readFileSync(global.anti, "utf8"));
+    var data_anti = (() => { try { return JSON.parse(fs.readFileSync(global.anti, "utf8")); } catch (e) { return {boximage:[],boxname:[],antiNickname:[],antiout:{}}; } })();
     if (type == "change_thread_image") {
       const { ADMINBOT } = global.config;
       const botID = api.getCurrentUserID();
@@ -468,7 +468,7 @@ module.exports = function ({ api, models }) {
     let form_mm_dd_yyyy = (input = '', split = input.split('/')) => `${split[1]}/${split[0]}/${split[2]}`;
     let prefix = (global.data.threadData.get(event.threadID) || {}).PREFIX || global.config.PREFIX;
     let send = (msg, callback) => api.sendMessage(msg, event.threadID, callback, event.messageID);
-    let name = await Users.getNameUser(event.senderID);
+    let name = await Users.getNameUser(event.senderID).catch(() => 'User');
     // ============== BYPASS THUEBOT - UNCOMMENT TO ENABLE RENTAL CHECK ==============
     // if ((event.body || '').startsWith(prefix) && event.senderID != api.getCurrentUserID() && !global.config.NDH.includes(event.senderID) && !global.config.ADMINBOT.includes(event.senderID)) {
     //    let thuebot;
