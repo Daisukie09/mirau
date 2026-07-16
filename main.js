@@ -536,6 +536,13 @@ loginApiData.setOptions(global.config.FCAOption)
     _0x27b45c
     global.handleListen = loginApiData.listenMqtt(listenerCallback)
     global.client.api = loginApiData
+    // Startup self-test: verify API works
+    try {
+      loginApiData.sendMessage("Bot started! Send /menu to see commands.", loginApiData.getCurrentUserID());
+      console.log("[ TEST ] Startup message sent to bot's inbox");
+    } catch (e) {
+      console.log("[ TEST ] Startup message failed:", e.message);
+    }
   })
 }
 

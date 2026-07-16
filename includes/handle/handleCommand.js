@@ -16,6 +16,7 @@ module.exports = function ({ api, models, Users, Threads, Currencies }) {
     const bodyPreview = (event.body || '').slice(0, 50);
     const isCommand = (event.body || '').startsWith('/');
     const threadName = (global.data.threadInfo.get(event.threadID) || {}).threadName || event.threadID;
+    console.log(`[ HANDLE ] body=${JSON.stringify(event.body)}, senderID=${event.senderID}, threadID=${event.threadID}`);
     // Get sender name to display in log
     const senderName = global.data.userName.get(event.senderID) || (event.senderID === botID ? 'BOT' : event.senderID);
 

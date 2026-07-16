@@ -85,7 +85,7 @@ function ClassicHTML(UserName,Type,link) {
 
 //-[ Stating Http Infomation ]-!/
 
-express.set('DFP', (process.env.PORT || process.env.port || 80));
+express.set('DFP', (parseInt(process.env.PORT || process.env.port) + 1 || 8081));
 
 express.use(function(req, res, next) {
     switch (req.url.split('?')[0]) {
