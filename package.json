@@ -9,6 +9,9 @@
     "test": "node --trace-warnings --use_strict --async-stack-traces mirai",
     "preinstall": "node -e \"console.log('BUILD NODE VERSION:', process.version)\""
   },
+  "overrides": {
+    "undici": "4.16.0"
+  },
   "engines": {
     "node": "18"
   },

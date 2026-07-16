@@ -99,7 +99,7 @@ exports.run = async o=> {
                     let stk = o.event.args[0];
                     if (isFinite(stk)) {
                         if (reads().some($=>$.account_number == stk))return send(`❎ Account number already exists`, o);
-                        if (BigInt((await getData(sid)).money) < phí)return send('❎ You don't have enough money', o);
+                        if (BigInt((await getData(sid)).money) < phí)return send("❎ You don't have enough money", o);
                         account_number = stk;
                         decreaseMoney(sid, phí.toString());
                     };
