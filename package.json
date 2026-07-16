@@ -6,10 +6,11 @@
   "scripts": {
     "start": "node index",
     "login": "node login",
-    "test": "node --trace-warnings --use_strict --async-stack-traces mirai"
+    "test": "node --trace-warnings --use_strict --async-stack-traces mirai",
+    "preinstall": "node -e \"console.log('BUILD NODE VERSION:', process.version)\""
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "18"
   },
   "author": "TDF-2803 | zL: 0878139888",
   "license": "GPL-3.0",
@@ -79,6 +80,7 @@
     "systeminformation": "^5.18.4",
     "tinyurl": "^1.1.7",
     "totp-generator": "^0.0.14",
+    "undici": "4.16.0",
     "uniqid": "^5.4.0",
     "uuid": "^10.0.0",
     "weather-js": "^2.0.0",
