@@ -203,11 +203,14 @@ async function callOpenRouter(payload, retries = 0) {
 }
 
 async function getVoice(text) {
+  if (text.length > 200) return null;
   try {
-    const res = await axios.get('https://api.tts.quest/v3/voicevox/synthesis?text=' + encodeURIComponent(text) + '&speaker=89', { timeout: 30000 });
+    const trans = await axios.get('https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ja&dt=t&q=' + encodeURIComponent(text), { timeout: 10000 });
+    const jaText = trans.data[0].map(s => s[0]).join('');
+    const res = await axios.get('https://api.tts.quest/v3/voicevox/synthesis?text=' + encodeURIComponent(jaText) + '&speaker=89', { timeout: 15000 });
     const audioUrl = res.data.mp3StreamingUrl;
     if (!audioUrl) return null;
-    const audioRes = await axios({ method: 'get', url: audioUrl, responseType: 'stream', timeout: 30000 });
+    const audioRes = await axios({ method: 'get', url: audioUrl, responseType: 'stream', timeout: 15000 });
     return audioRes.data;
   } catch { return null; }
 }
