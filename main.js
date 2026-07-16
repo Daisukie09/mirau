@@ -524,6 +524,9 @@ loginApiData.setOptions(global.config.FCAOption)
         process.exit(1)
       }
       if (['presence', 'typ', 'read_receipt'].some((data) => data == message.type)) { return }
+      if (message.type === 'message' && message.body) {
+        console.log(`[ MSG ] Received from ${message.senderID}: ${message.body.slice(0,100)}`);
+      }
       return listener(message)
     }
     var _0x27b45c = setInterval(function (_0x5e6185) {
