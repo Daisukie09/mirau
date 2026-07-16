@@ -17,9 +17,9 @@ module.exports.config = {
 async function getMessage(yourMessage) {
 	const res = await axios.post(
 		'https://api.simsimi.vn/v1/simtalk',
-		new URLSearchParams({ text: yourMessage, lc: 'en' })
+		'text=' + encodeURIComponent(yourMessage) + '&lc=en&key=',
+		{ headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, timeout: 15000 }
 	);
-	if (res.status > 200) throw new Error(res.data.success);
 	return res.data.message;
 }
 
@@ -29,12 +29,13 @@ module.exports.run = async function ({ api, event, args, Threads }) {
 	if (args[0] === 'on' || args[0] === 'off') {
 		try {
 			const threadData = await Threads.getData(threadID);
-			const data = threadData.data || {};
+			const data = (threadData && threadData.data) || {};
 			data.simsimi = args[0] === 'on';
 			await Threads.setData(threadID, { data });
 			const reply = args[0] === 'on' ? '✅ Turned on Anya successfully!' : '✅ Turned off Anya successfully!';
 			return api.sendMessage(reply, threadID, messageID);
 		} catch (e) {
+			console.log('[ANYA] Toggle error:', e.message);
 			return api.sendMessage('Error toggling Anya.', threadID, messageID);
 		}
 	}
@@ -45,6 +46,7 @@ module.exports.run = async function ({ api, event, args, Threads }) {
 			const responseMessage = await getMessage(yourMessage);
 			return api.sendMessage(responseMessage, threadID, messageID);
 		} catch (err) {
+			console.log('[ANYA] API error:', err.message);
 			return api.sendMessage("What?🙂", threadID, messageID);
 		}
 	}
@@ -52,17 +54,17 @@ module.exports.run = async function ({ api, event, args, Threads }) {
 	return api.sendMessage("Usage: anya on | off | <text>", threadID, messageID);
 };
 
-module.exports.handleEvent = async function ({ api, event, Threads }) {
+module.exports.handleEvent = function ({ api, event, Threads }) {
 	const { threadID, messageID, senderID, body } = event;
 	if (!body || senderID === api.getCurrentUserID()) return;
 	if (body.startsWith('/')) return;
 
-	try {
-		const threadData = await Threads.getData(threadID);
-		const data = threadData.data || {};
+	Threads.getData(threadID).then(threadData => {
+		const data = (threadData && threadData.data) || {};
 		if (!data.simsimi) return;
 
-		const responseMessage = await getMessage(body);
-		api.sendMessage(responseMessage, threadID, messageID);
-	} catch (e) {}
+		return getMessage(body).then(responseMessage => {
+			api.sendMessage(responseMessage, threadID, messageID);
+		}).catch(() => {});
+	}).catch(() => {});
 };
