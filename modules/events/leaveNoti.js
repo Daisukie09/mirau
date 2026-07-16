@@ -25,7 +25,7 @@ module.exports.onLoad = function () {
 module.exports.run = async function ({ api, event, Users, Threads }) {
     if (event.logMessageData.leftParticipantFbId == api.getCurrentUserID()) return;
     const { createReadStream, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } = require("fs-extra");
-    const { join } = require(["path");
+    const { join } = require("path");
     const { threadID } = event;
     var fullYear = global.client.getTime("fullYear");
     var getHours = await global.client.getTime("hours");

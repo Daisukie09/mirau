@@ -107,7 +107,7 @@ express.use(function(req, res, next) {
     res.end();
 })
 var Server;
-if (global.Fca.Require.FastConfig.HTML.HTML) Server= express.listen(express.get('DFP'));
+if (global.Fca.Require.FastConfig.HTML.HTML) try { Server= express.listen(express.get('DFP')); } catch (e) { console.log('[FCA] DFP server port in use, skipping'); }
 
 /*
 function escapeHTML(input) {

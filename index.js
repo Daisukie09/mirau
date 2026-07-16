@@ -116,7 +116,7 @@ fs.readFile('package.json', 'utf8', (err, data) => {
   } catch (parseError) {
   };
   // Create required directories
-  ['./modules/commands/cache', './modules/commands/data', './modules/events/cache'].forEach(dir => {
+  ['./modules/commands/cache', './modules/commands/data', './modules/commands/data/locheo', './modules/events/cache'].forEach(dir => {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   });
   ///////////////////////////////////////

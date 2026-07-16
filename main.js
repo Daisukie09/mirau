@@ -438,7 +438,8 @@ loginApiData.setOptions(global.config.FCAOption)
               if (module.handleEvent) global.client.eventRegistered.push(module.config.name);
               global.client.commands.set(module.config.name, module);
           } catch (error) {
-              logger.loader(global.getText('mirai', 'failLoadModule', module.config.name, error), 'error');
+              const moduleName = (module && module.config && module.config.name) ? module.config.name : command.replace('.js', '');
+              logger.loader(global.getText('mirai', 'failLoadModule', moduleName, error), 'error');
           };
       }
   }(),
@@ -504,7 +505,8 @@ loginApiData.setOptions(global.config.FCAOption)
               }
               global.client.events.set(event.config.name, event);
           } catch (error) {
-              logger.loader(global.getText('mirai', 'failLoadModule', event.config.name, error), 'error');
+              const moduleName = (event && event.config && event.config.name) ? event.config.name : ev.replace('.js', '');
+              logger.loader(global.getText('mirai', 'failLoadModule', moduleName, error), 'error');
           }
       }
   }()
