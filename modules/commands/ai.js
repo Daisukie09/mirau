@@ -202,17 +202,29 @@ async function callOpenRouter(payload, retries = 0) {
   }
 }
 
+async function getVoice(text) {
+  try {
+    const res = await axios.get('https://api.tts.quest/v3/voicevox/synthesis?text=' + encodeURIComponent(text) + '&speaker=89', { timeout: 30000 });
+    const audioUrl = res.data.mp3StreamingUrl;
+    if (!audioUrl) return null;
+    const audioRes = await axios({ method: 'get', url: audioUrl, responseType: 'stream', timeout: 30000 });
+    return audioRes.data;
+  } catch { return null; }
+}
+
 module.exports.config = {
   name: "ai",
-  version: "3.0.0",
+  version: "3.1.0",
   hasPermssion: 0,
   credits: "Vincent Magtolis",
-  description: "Chat with the AI assistant with special actions (time, calculate, random, facts, user lookup).",
+  description: "Chat with the AI assistant with voice attachment",
   commandCategory: "AI Chat",
   usages: "<prompt>",
   cooldowns: 5,
   dependencies: {
-    "axios": ""
+    "axios": "",
+    "fs": "",
+    "path": ""
   }
 };
 
@@ -293,7 +305,9 @@ module.exports.run = async function ({ api, event, args }) {
 
     conversationHistories.set(historyKey, updatedHistory);
 
-    api.sendMessage(replyText, threadID, (err, info) => {
+    const voiceStream = await getVoice(replyText).catch(() => null);
+    const msgObj = voiceStream ? { body: replyText, attachment: voiceStream } : { body: replyText };
+    api.sendMessage(msgObj, threadID, (err, info) => {
       if (info) {
         global.client.handleReply.push({
           name: module.exports.config.name,
@@ -378,7 +392,9 @@ module.exports.handleReply = async function ({ api, event, handleReply }) {
       updatedHistory.splice(0, updatedHistory.length - MAX_HISTORY);
     }
 
-    api.sendMessage(replyText, threadID, (err, info) => {
+    const voiceStream = await getVoice(replyText).catch(() => null);
+    const msgObj = voiceStream ? { body: replyText, attachment: voiceStream } : { body: replyText };
+    api.sendMessage(msgObj, threadID, (err, info) => {
       if (info) {
         global.client.handleReply.push({
           name: module.exports.config.name,
