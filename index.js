@@ -115,8 +115,12 @@ fs.readFile('package.json', 'utf8', (err, data) => {
     logger(`Total ${totalDependencies} Packages loaded`, '[ PACKAGE ]');
   } catch (parseError) {
   };
+  // Create required directories
+  ['./modules/commands/cache', './modules/commands/data', './modules/events/cache'].forEach(dir => {
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  });
   ///////////////////////////////////////
-  ////////// CHECK LỖI MODULES //////////
+  ////////// CHECK MODULE ERRORS ////////
   ///////////////////////////////////////
   try {
     var files = fs.readdirSync('./modules/commands');

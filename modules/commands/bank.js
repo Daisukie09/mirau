@@ -375,7 +375,7 @@ exports.run = async o=> {
         case 'delete': {
             if (data == null)return send(`⚠️ You don't have an account`);
             if (data.uid != sid)return send(`❎ Insufficient permissions to delete`);
-            if (BigInt(data.debt) > 0n)return send('⚠️ Cannot process request because you haven't paid off your debt');
+            if (BigInt(data.debt) > 0n)return send("⚠️ Cannot process request because you haven't paid off your debt");
             let callback = ()=> {
                 del(sid);
                 send('✅ Account deleted');
