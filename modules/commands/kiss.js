@@ -18,12 +18,10 @@ module.exports.config = {
     }
 };
 
-module.exports.run = async function ({ api, event, args }) {
+module.exports.run = async function ({ api, event }) {
     const { threadID, messageID, senderID } = event;
-    const mentions = Object.keys(event.mentions);
-    if (mentions.length === 0) return api.sendMessage("Please tag the person you want to kiss!", threadID, messageID);
-
-    const targetID = mentions[0];
+    const targetID = event.messageReply?.senderID || Object.keys(event.mentions || {})[0];
+    if (!targetID) return api.sendMessage("Reply to a message or @mention the person you want to kiss!", threadID, messageID);
     const cacheDir = path.join(__dirname, 'cache');
     if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir, { recursive: true });
     const imgPath = path.join(cacheDir, `kiss_${Date.now()}.png`);
