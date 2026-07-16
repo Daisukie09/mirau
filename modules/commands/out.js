@@ -20,5 +20,5 @@ module.exports.run = async function({ api, event, args }) {
   } else {
     id = parseInt(args.join(" "));
   }
-  return api.sendMessage('𝐅𝐨𝐥𝐥𝐨𝐰𝐢𝐧𝐠 𝐦𝐚𝐬𝐭𝐞𝐫'𝐬 𝐨𝐫𝐝𝐞𝐫𝐬 💌', id, () => api.removeUserFromGroup(api.getCurrentUserID(), id))
+  return api.sendMessage("𝐅𝐨𝐥𝐥𝐨𝐰𝐢𝐧𝐠 𝐦𝐚𝐬𝐭𝐞𝐫'𝐬 𝐨𝐫𝐝𝐞𝐫𝐬 💌", id, () => api.removeUserFromGroup(api.getCurrentUserID(), id))
 }
