@@ -73,7 +73,10 @@
         "selfListen": true,
         "autoMarkDelivery": true,
         "autoMarkRead": true,
-        "userAgent": "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 OPR/84.0.4316.21"
+        "online": false,
+        "autoReconnect": true,
+        "updatePresence": false,
+        "userAgent": "Mozilla/5.0 (Linux; Android 12; SM-S908B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.88 Mobile Safari/537.36"
     },
     "boctham": {
         "cooldownTime": ""

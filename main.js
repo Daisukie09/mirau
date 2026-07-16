@@ -280,47 +280,48 @@ async function uptime() {
   writeFileSync(global.client.configPath, JSON.stringify(datauptime, null, 4), 'utf-8')
   return logger('Saved uptime from last restart!', '[ UPTIME ]')
 }
-async function loginAppstate() {
-  const login = require(con.NPM_FCA),
-    dataaccountbot = require('./config.json'),
-    accountbot = {
-      logLevel: 'silent',
-      forceLogin: true,
-      userAgent:
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0',
-    }
-  const Dataaccountbot = accountbot
-  let email = dataaccountbot.EMAIL,
-    password = dataaccountbot.PASSWORD,
-    keyotp = dataaccountbot.OTPKEY.replace(/\s+/g, '').toLowerCase()
-  const autologin = { email, password, keyotp }
-  login(autologin, Dataaccountbot, async (autologinError, autologinDone) => {
-    if (global.config.autoRestart != 0) {
-        setTimeout(() => {
-          logger("Bot is restarting...", "[ RESTART ]");
-          return process.exit(1)
-        }, global.config.autoRestart * 1000)
-    }
-
-    if (autologinError) {
-      switch (autologinError.error) {
-        case 'login-approval': {
-          return (
-            logger('Please disable 2FA before using BOT!', '[ LOGIN-2FA ]'),
-            process.exit(0)
-          )
-        }
-        default:
-          logger('Cannot login with password, please replace appstate or password to continue!','[ LOGIN-ERROR ]')
-          return process.exit(0)
+function loginAppstate() {
+  return new Promise((resolve) => {
+    const login = require(con.NPM_FCA),
+      dataaccountbot = require('./config.json'),
+      accountbot = {
+        logLevel: 'silent',
+        forceLogin: true,
+        userAgent:
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:87.0) Gecko/20100101 Firefox/87.0',
       }
-    }
-    const loginagain = JSON.stringify(autologinDone.getAppState(), null, 4)
-    return (
-      writeFileSync('./' + dataaccountbot.APPSTATEPATH, loginagain, 'utf-8'),
-      uptime(),
+    const Dataaccountbot = accountbot
+    let email = dataaccountbot.EMAIL,
+      password = dataaccountbot.PASSWORD,
+      keyotp = dataaccountbot.OTPKEY.replace(/\s+/g, '').toLowerCase()
+    const autologin = { email, password, keyotp }
+    login(autologin, Dataaccountbot, async (autologinError, autologinDone) => {
+      if (global.config.autoRestart != 0) {
+          setTimeout(() => {
+            logger("Bot is restarting...", "[ RESTART ]");
+            return process.exit(1)
+          }, global.config.autoRestart * 1000)
+      }
+
+      if (autologinError) {
+        switch (autologinError.error) {
+          case 'login-approval': {
+            return (
+              logger('Please disable 2FA before using BOT!', '[ LOGIN-2FA ]'),
+              process.exit(0)
+            )
+          }
+          default:
+            logger('Cannot login with password, please replace appstate or password to continue!','[ LOGIN-ERROR ]')
+            return process.exit(0)
+        }
+      }
+      const loginagain = JSON.stringify(autologinDone.getAppState(), null, 4)
+      writeFileSync('./' + dataaccountbot.APPSTATEPATH, loginagain, 'utf-8')
+      uptime()
       logger('Login successful, restarting!', '[ LOGIN-ACCOUNT ]')
-    )
+      resolve()
+    })
   })
 }
 function onBot({ models }) {
@@ -520,9 +521,10 @@ loginApiData.setOptions(global.config.FCAOption)
     async function listenerCallback(error, message) {
       if (error) {
         logger('Account logged out, reconnecting!', '[ LOGIN-ACCOUNT ]')
-        var _0x50d0db = await loginAppstate()
-        _0x50d0db
-        await new Promise((data) => setTimeout(data, 7000))
+        console.log('[RECONNECT] Waiting 30s before reconnecting...')
+        await new Promise((r) => setTimeout(r, 30000))
+        await loginAppstate()
+        await new Promise((r) => setTimeout(r, 7000))
         process.exit(1)
       }
       if (['presence', 'typ', 'read_receipt'].some((data) => data == message.type)) { return }
